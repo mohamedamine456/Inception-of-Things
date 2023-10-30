@@ -1,0 +1,28 @@
+#!/bin/bash
+
+# Set up the initial variables
+NAME=$3
+TOKEN_FILE="/vagrant/scripts/node-token"
+INSTALL_K3S_EXEC="agent --server https://$1:6443 --token-file $TOKEN_FILE --node-ip=$2"
+
+# Check if TOKEN_FILE exists
+if [[ ! -e $TOKEN_FILE ]]; then
+  echo "Error: Token file does not exist at $TOKEN_FILE"
+  exit 1
+fi
+
+echo "[INFO]  Installing k3s on server worker node (ip: $2)"
+echo "[INFO]  Token: $(cat $TOKEN_FILE)"
+echo "[INFO]  ARGUMENT PASSED TO INSTALL_K3S_EXEC: $INSTALL_K3S_EXEC"
+
+# Install curl if not available
+apk update && apk upgrade && apk add curl
+
+# Attempt to download and run the installation script
+if ! curl -sfL https://get.k3s.io | sh -; then
+  echo "Error downloading or running the installation script"
+  exit 1
+fi
+
+# Setup alias for all users
+echo "alias k='kubectl'" >> /etc/profile.d/00-aliases.sh

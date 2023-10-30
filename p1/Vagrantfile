@@ -1,5 +1,5 @@
 # Variables that may be changed
-VM_C_BOX = "generic/alpine38"
+VM_C_BOX = "generic/alpine311"
 VM_C_MEMORY = "1024"
 VM_C_CPUS = "1"
 
@@ -18,13 +18,15 @@ Vagrant.configure("2") do |config|
 
   config.vm.define SERVER_NAME, primary: true do |server|
     server.vm.hostname = SERVER_NAME
+    server.vm.synced_folder ".", "/vagrant"
     server.vm.network "private_network", ip: SERVER_IP
-    server.vm.provision "shell", path: "install.sh"
+    server.vm.provision "shell", privileged: true, path: "scripts/install_server.sh", args: [SERVER_IP, SERVER_NAME]
   end
 
   config.vm.define WORKER_NAME do |worker|
     worker.vm.hostname = WORKER_NAME
     worker.vm.network "private_network", ip: WORKER_IP
-    worker.vm.provision "shell", path: "install.sh"
+    worker.vm.synced_folder ".", "/vagrant"
+    worker.vm.provision "shell", privileged: true, path: "scripts/install_worker.sh", args: [SERVER_IP, WORKER_IP, WORKER_NAME]
   end
 end
