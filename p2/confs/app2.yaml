@@ -1,0 +1,36 @@
+# app2-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: app2-service
+spec:
+  selector:
+    app: app2
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  # volumes:
+  #   - app_content/app1.html:/usr/share/nginx/html/index.html
+---
+# app2-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app2-deployment
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: app2
+  template:
+    metadata:
+      labels:
+        app: app2
+    spec:
+      containers:
+      - name: app2-container
+        image: nginx:latest
+        ports:
+          - containerPort: 80
+        
