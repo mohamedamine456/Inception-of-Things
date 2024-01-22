@@ -17,6 +17,8 @@ Vagrant.configure("2") do |config|
     server.vm.hostname = SERVER_NAME
     server.vm.synced_folder ".", "/vagrant"
     server.vm.network "private_network", ip: SERVER_IP
-    server.vm.provision "shell", privileged: true, path: "scripts/install_server.sh", args: [SERVER_IP, SERVER_NAME]
+    server.vm.network "forwarded_port", guest: 80, host: 80
+    server.vm.network "forwarded_port", guest: 6443, host: 6443
+    server.vm.provision "shell", privileged: true, path: "scripts/install_server.sh", args: [SERVER_IP]
   end
 end
