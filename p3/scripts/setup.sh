@@ -15,13 +15,13 @@ sudo setfacl -m u:$USER:rw /run/docker.sock
 operation_title "Start Docker"
 sudo systemctl start docker
 
-### Create namespaces
-kubectl create namespace argocd
-kubectl create namespace dev
-
 ### create cluster
 operation_title "Create iot-dev cluster"
 k3d cluster create iot-dev
+
+### Create namespaces
+kubectl create namespace argocd
+kubectl create namespace dev
 
 # Wait for the cluster to be ready
 kubectl wait --for=condition=Ready nodes --all --timeout=300s
