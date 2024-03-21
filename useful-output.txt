@@ -1,0 +1,3 @@
+Argo CD is now accessible at: http://172.26.0.2:30907 Argo CD is now accessible at: http://172.26.0.2:30907
+
+

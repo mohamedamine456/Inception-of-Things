@@ -52,9 +52,7 @@ operation_title "Install k3d"
 if [ -z $(command -v k3d) ]; then
 
     # download the installation
-    curl -s https://api.github.com/repositories/179063508/releases/latest | grep browser_download_url | grep linux | cut -d '"' -f 4 | xargs curl -LO
-    chmod +x k3d-linux-386
-    sudo mv k3d-linux-386 /usr/local/bin/k3d
+    curl -s https://raw.githubusercontent.com/k3d-io/k3d/main/install.sh | bash
 
 else
     already_installed "K3d"
