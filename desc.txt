@@ -1,0 +1,49 @@
+Name:             playground-deployment-595699cb59-jr2zs
+Namespace:        dev
+Priority:         0
+Service Account:  default
+Node:             k3d-iot-server-0/172.24.0.2
+Start Time:       Thu, 21 Mar 2024 23:19:59 +0100
+Labels:           app=playground
+                  pod-template-hash=595699cb59
+Annotations:      <none>
+Status:           Pending
+IP:               10.42.0.25
+IPs:
+  IP:           10.42.0.25
+Controlled By:  ReplicaSet/playground-deployment-595699cb59
+Containers:
+  playground-container:
+    Container ID:   
+    Image:          wil42/playground:v1
+    Image ID:       
+    Port:           8888/TCP
+    Host Port:      0/TCP
+    State:          Waiting
+      Reason:       ImagePullBackOff
+    Ready:          False
+    Restart Count:  0
+    Environment:    <none>
+    Mounts:
+      /var/run/secrets/kubernetes.io/serviceaccount from kube-api-access-d55qt (ro)
+Conditions:
+  Type              Status
+  Initialized       True 
+  Ready             False 
+  ContainersReady   False 
+  PodScheduled      True 
+Volumes:
+  kube-api-access-d55qt:
+    Type:                    Projected (a volume that contains injected data from multiple sources)
+    TokenExpirationSeconds:  3607
+    ConfigMapName:           kube-root-ca.crt
+    ConfigMapOptional:       <nil>
+    DownwardAPI:             true
+QoS Class:                   BestEffort
+Node-Selectors:              <none>
+Tolerations:                 node.kubernetes.io/not-ready:NoExecute op=Exists for 300s
+                             node.kubernetes.io/unreachable:NoExecute op=Exists for 300s
+Events:
+  Type    Reason   Age                   From     Message
+  ----    ------   ----                  ----     -------
+  Normal  BackOff  105s (x280 over 66m)  kubelet  Back-off pulling image "wil42/playground:v1"

@@ -53,7 +53,6 @@ echo -n "Password to connect to Argo CD is : " >> ./useful-output.txt
 kubectl -n argocd get secret argocd-initial-admin-secret -o jsonpath='{.data.password}' | base64 -d && echo >> ./useful-output.txt
 
 
-kubectl port-forward -n argocd svc/argocd-server 8080:443 # after this command, you can access argocd on localhost:8080
 
 # Install Argo-CD CLI
 operation_title "Install Argo-CD CLI"
@@ -70,3 +69,7 @@ operation_title "Install Argo-CD CLI"
 
 # # argocd login
 # argocd login --insecure
+
+
+operation_title "Forward port"
+kubectl port-forward -n argocd svc/argocd-server 8080:443 & kubectl port-forward -n dev svc/playground-service 8888:8888 # after this command, you can access argocd on localhost:8080
