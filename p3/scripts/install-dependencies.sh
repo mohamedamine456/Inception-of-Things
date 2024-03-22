@@ -78,3 +78,23 @@ if [ -z $(command -v kubectl) ]; then
 else
     already_installed "kubectl"
 fi
+
+
+#########################
+# install kubectl
+#########################
+
+operation_title "Install Argo-CD CLI"
+
+if [ -z $(command -v argocd) ]; then
+    # Download the ArgoCD CLI binary
+    curl -LO https://github.com/argoproj/argo-cd/releases/latest/download/argocd-darwin-amd64
+
+    # Make the binary executable
+    chmod +x argocd-darwin-amd64
+
+    # Move the binary to a directory included in your PATH
+    sudo mv argocd-darwin-amd64 /usr/local/bin/argocd
+else
+    already_installed "argocd"
+fi
