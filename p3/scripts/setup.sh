@@ -76,4 +76,5 @@ argocd app create $APPLICATION_NAME \
     --dest-namespace dev \
     --dest-server https://kubernetes.default.svc \
     --sync-policy automated \
-    --auto-prune
+    --auto-prune \
+    --sync-option PollingInterval=10s
