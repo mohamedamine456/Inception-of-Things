@@ -1,19 +1,19 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: app2-deployment
+  name: app-two
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: app2
+      app: app-two
   template:
     metadata:
       labels:
-        app: app2
+        app: app-two
     spec:
       containers:
-        - name: app2-container
+        - name: app-two-container
           image: paulbouwer/hello-kubernetes:1
           ports:
             - containerPort: 80
@@ -31,7 +31,7 @@ metadata:
 spec:
   type: ClusterIP
   selector:
-    app: app2
+    app: app-two
   ports:
   - protocol: TCP
     port: 80

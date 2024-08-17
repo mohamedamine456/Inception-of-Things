@@ -1,6 +1,6 @@
 # Variables that may be changed
 VM_C_BOX = "generic/alpine311"
-VM_C_MEMORY = "1024"
+VM_C_MEMORY = "2048"
 VM_C_CPUS = "1"
 
 SERVER_NAME = "mlachhebS"
