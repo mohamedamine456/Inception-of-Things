@@ -7,7 +7,7 @@ operation_title(){
 wait_command()
 {
     sleep 5
-    while [ "$(kubectl get pods -n $1 --field-selector=status.phase!=Succeeded,status.phase!=Running  --no-headers | wc -l)" -gt 0 ]; do
+    while [ "$(kubectl get pods -n $1 --field-selector=status.phase!=Succeeded,status.phase!=Running,status.phase!=Completed  --no-headers | wc -l)" -gt 0 ]; do
         echo "Waiting for $1 pods to be ready..."
         sleep 10
     done
