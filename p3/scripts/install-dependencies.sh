@@ -27,18 +27,20 @@ if [ -z $(command -v docker) ]; then
 
     # Install packages to allow apt to use a repository over HTTPS
     sudo apt-get install -y apt-transport-https ca-certificates curl gnupg-agent software-properties-common
-
+    sudo install -m 0755 -d /etc/apt/keyrings
     # Add Docker’s official GPG key
-    curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+    sudo curl -fsSL https://download.docker.com/linux/debian/gpg -o /etc/apt/keyrings/docker.asc
+    sudo chmod a+r /etc/apt/keyrings/docker.asc
 
     # Set up the stable repository
     sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu $(lsb_release -cs) stable"
-
+    echo "deb [arch=amd64 signed-by=/etc/apt/keyrings/docker.asc] https://download.docker.com/linux/debian bullseye stable" | \
+    sudo tee /etc/apt/sources.list.d/docker.list > /dev/null
     # Update the package index again
     sudo apt-get update
 
     # Install Docker Engine
-    sudo apt-get install -y docker-ce docker-ce-cli containerd.io
+    sudo apt-get install docker-ce docker-ce-cli containerd.io docker-buildx-plugin docker-compose-plugin
 else
     already_installed "Docker"
 fi
@@ -81,20 +83,17 @@ fi
 
 
 #########################
-# install kubectl
+# install argocd
 #########################
 
 operation_title "Install Argo-CD CLI"
 
 if [ -z $(command -v argocd) ]; then
     # Download the ArgoCD CLI binary
-    curl -LO https://github.com/argoproj/argo-cd/releases/latest/download/argocd-darwin-amd64
+    curl -sSL -o argocd-linux-amd64 https://github.com/argoproj/argo-cd/releases/latest/download/argocd-linux-amd64
+    sudo install -m 555 argocd-linux-amd64 /usr/local/bin/argocd
+    rm argocd-linux-amd64
 
-    # Make the binary executable
-    chmod +x argocd-darwin-amd64
-
-    # Move the binary to a directory included in your PATH
-    sudo mv argocd-darwin-amd64 /usr/local/bin/argocd
 else
     already_installed "argocd"
 fi
